@@ -1,0 +1,30 @@
+name: in_season
+version: 1.0.0+1
+description: >-
+  Find which fruits and vegetables are currently
+  in season, how to cook them and what nutritional 
+  benefits they have.
+author: Roland Lamidieu <roland.lamidieu@gmail.com>
+
+environment:
+  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+
+dependencies:
+  flutter_svg: "^0.12.0"
+  flutter_launcher_icons: "^0.7.0"
+  intl: "^0.15.7"
+  
+flutter_icons:
+  android: "launcher_icon" 
+  ios: true
+  image_path: "res/icons/android.png"
+
+  flutter:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - res/
+    - res/fruits/
