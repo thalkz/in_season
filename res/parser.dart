@@ -48,7 +48,7 @@ main(List<String> args) async {
 
     var json = jsonEncode(map);
 
-    var outputFile = new File('fruits8.json');
+    var outputFile = new File('fruits.json');
     outputFile.writeAsStringSync(json);
   });
 }

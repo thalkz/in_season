@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
+List<Fruit> _fruits;
+
 class Fruit {
   final name, image, color, start, length, text;
   Fruit(this.name, this.image, this.color, this.start, this.length, this.text);
@@ -13,12 +15,19 @@ class Fruit {
 }
 
 Future<List<Fruit>> _parseFruits() async {
-  var text = await rootBundle.loadString("res/fruits8.json");
+  var text = await rootBundle.loadString("res/fruits.json");
   List<dynamic> json = await jsonDecode(text)['data'];
-  return json
+  _fruits = json
     .map((json) => Fruit(json['name'], json['icon'], Color(json['color']),
         json['start'], json['length'], List.from(json['text'])))
     .toList();
+  return _fruits;
+}
+
+_randomFruitIn(month) {
+  var list = _fruits.where((f) => f.inSeason(month)).toList();
+  list.shuffle();
+  return list[0];
 }
 
 main() => runApp(
@@ -28,10 +37,9 @@ main() => runApp(
       initialData: <Fruit>[],
       builder: (context, snap) => _mainPage(context, snap.data),
     ),
-    theme: ThemeData(primaryColor: Colors.green),
+    theme: ThemeData(primaryColor: Color(0xFFF8F8F8)),
   ),
 );
-
 
 _mainPage(context, List<Fruit> fruits) => DefaultTabController(
     length: 12,
@@ -41,16 +49,20 @@ _mainPage(context, List<Fruit> fruits) => DefaultTabController(
         title: SvgPicture.asset("res/logo.svg"),
         centerTitle: true,
         bottom: TabBar(
+          indicatorWeight: 10,
           isScrollable: true,
-          tabs: List.generate(12, (month) => Tab(icon: Text(DateFormat().dateSymbols.MONTHS[month]))),
+          tabs: List.generate(12, (month) => Tab(icon: Text(DateFormat().dateSymbols.MONTHS[month], style: TextStyle(fontSize: 32, fontWeight: FontWeight.w900),))),
+          labelColor: Colors.black,
+          unselectedLabelColor: Color(0xFFC5C5C5),
+          indicatorColor: Colors.transparent,
         ),
       ),
+      backgroundColor: Colors.white,
       body: TabBarView(
         children: _buildFruitsGrid(context, fruits)
       ),
     ),
   );
-
 
 _buildFruitsGrid(context, List<Fruit> fruits) => List.generate(
     12,
@@ -69,7 +81,7 @@ _buildFruitsGrid(context, List<Fruit> fruits) => List.generate(
 Widget _buildItem(context, fruit, month) => InkWell(
     onTap: () => Navigator.push(
         context, 
-        MaterialPageRoute(builder: (context) => _fruitPage(fruit, month)),
+        MaterialPageRoute(builder: (context) => _fruitPage(fruit, month, context)),
       ),
     child: Column(
       children: [
@@ -85,8 +97,10 @@ Widget _buildItem(context, fruit, month) => InkWell(
     ),
   );
 
-_fruitPage(fruit, month) => Scaffold(
-    appBar: AppBar(),
+_fruitPage(fruit, month, context) => Scaffold(
+    appBar: AppBar(
+      title: Text('${DateFormat().dateSymbols.MONTHS[month]}'),
+    ),
     body: ListView.builder(
       padding: EdgeInsets.only(left: 24, right: 24, bottom: 24),
       itemCount: fruit.text.length + 1,
@@ -99,14 +113,22 @@ _fruitPage(fruit, month) => Scaffold(
                   : TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
             ),
     ),
+    floatingActionButton: FloatingActionButton.extended(
+      icon: Icon(Icons.shuffle),
+      label: Text('Another one ?'),
+      onPressed: () => Navigator.pushReplacement(
+        context, 
+        MaterialPageRoute(builder: (context) => _fruitPage(_randomFruitIn(month), month, context)),
+      ),
+    ),
   );
 
 _buildHeader(fruit, month) => Container(
     padding: EdgeInsets.all(24),
-    margin: EdgeInsets.only(bottom: 24),
+    margin: EdgeInsets.symmetric(vertical: 24),
     decoration: BoxDecoration(
       color: fruit.color,
-      borderRadius: BorderRadius.vertical(bottom: Radius.circular(40)),
+      borderRadius: BorderRadius.all(Radius.circular(40)),
     ),
     child: Stack(
       children: [
