@@ -1,9 +1,6 @@
 name: in_season
 version: 1.0.0+1
-description: >-
-  Find which fruits and vegetables are currently
-  in season, how to cook them and what nutritional 
-  benefits they have.
+description: A visual calendar of in season fruits and vegetables, made with less than 5k of dart code.
 author: Roland Lamidieu <roland.lamidieu@gmail.com>
 
 environment:

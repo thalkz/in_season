@@ -1,16 +1,12 @@
 # InSeason
 
-Find which fruits and vegetables are currently in season, how to cook them and what nutritional benefits they have.
+A visual calendar of in season fruits and vegetables, made with less than 5k of dart code.
 
-## Getting Started
+This project was made for the #FlutterCreate contest, organised by the Flutter team at Google. 
 
-This project is a starting point for a Flutter application.
+The data in the app was randomly generated and filled with 'Lorem Ipsum' for texts. A later version will be published with actual data.
 
-A few resources to get you started if this is your first Flutter project:
+## Credits 
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+All fruits icons were designed by Freepik from Flaticon.
+[See on Flaticon](https://www.flaticon.com/packs/fruits-vegetables-13)
