@@ -1,3 +1,6 @@
+# This is the dart script that generated the data used in the app.
+# Rename the file to 'parser.dart' and run 'dart parser.dart' to execute.
+
 import 'dart:io';
 import 'dart:math';
 import 'dart:convert';
